@@ -9,8 +9,16 @@ use Intervention\Image\Facades\Image;
 
 class ProfilesController extends Controller
 {
-    public function index(User $user) 
+
+	private function getUserByUsername($username) {
+		return  User::where('username', $username)->firstOrFail();
+	}
+
+    public function index($username) 
     {
+		// Get the user by its username
+		$user = $this->getUserByUsername($username);
+		
 		// Check if a user is following a profile
 		$follows = (auth()->user()) ? auth()->user()->following->contains($user->id) : false;
 		
@@ -27,17 +35,24 @@ class ProfilesController extends Controller
     	return view('profiles.index', compact('user', 'follows', '', 'postCount', 'followersCount', 'followingCount'));
     }
 
-    public function edit(User $user)
+    public function edit($username)
     {
-    		
+    	// Get the user by its username
+		$user = $this->getUserByUsername($username);
+			
     	//Authorize user to only edit own profile
     	$this->authorize('update', $user->profile);
 
     	return view('profiles.edit', compact('user'));
     }
 
-    public function update(User $user)
+    public function update($username)
     {
+
+		// Get the user by its username
+		$user = $this->getUserByUsername($username);
+		
+
     	$data = request()->validate([
     		"title" => 'required',
     		"description" => 'required',
@@ -59,6 +74,6 @@ class ProfilesController extends Controller
     	auth()->user()->profile->update(array_merge($data, $imgArray ?? []));
 
 
-    	return redirect("/profile/{$user->id}");
+    	return redirect("/profile/{$user->username}");
     }
 }

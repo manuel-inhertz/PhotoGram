@@ -18,7 +18,7 @@
                     <div class="settings w-25 d-flex justify-content-between">
                         @can('update', $user->profile)
                             <a href="/p/create">Add New Post</a>
-                            <a href="/profile/{{$user->id}}/edit">Edit Profile</a>
+                            <a href="/profile/{{$user->username}}/edit">Edit Profile</a>
                         @endcan
                     </div>
                 </div>
@@ -45,7 +45,7 @@
         @foreach($user->posts as $post)
             <div class="col-4">
                 <a href="/p/{{$post->id}}">
-                    <img class="img-fluid" src="/storage/{{$post->image}}" alt="{{$post->caption}}">
+                    <img class="img-fluid" src="/storage/{{$post->image}}" alt="{{ strip_tags($post->caption)}}">
                 </a>
             </div>
         @endforeach

@@ -28,11 +28,11 @@ Route::get('/p/{post}', 'PostsController@show');
 
 // Profile Routes
 
-Route::get('/profile/{user}', 'ProfilesController@index')->name('profile.show');
+Route::get('/profile/{username}', 'ProfilesController@index')->name('profile.show');
 
-Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
+Route::get('/profile/{username}/edit', 'ProfilesController@edit')->name('profile.edit');
 
-Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.update');
+Route::patch('/profile/{username}', 'ProfilesController@update')->name('profile.update');
 
 // Follow Routes
 Route::post('follow/{user}', 'FollowsController@store');

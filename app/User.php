@@ -49,7 +49,7 @@ class User extends Authenticatable
                 'title' => $user->username,
             ]);
 
-            Mail::to($user->emal)->send(new NewUserWelcomeMail());
+            //Mail::to($user->emal)->send(new NewUserWelcomeMail());
         });
     }
 
