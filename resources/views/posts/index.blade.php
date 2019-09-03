@@ -24,6 +24,7 @@
             <div class="body mt-3">
                 {!! $post->caption !!}
             </div>
+            <comments-grid post-id={{$post->id}}></comments-grid>
         </div>
     </div>    
    @endforeach

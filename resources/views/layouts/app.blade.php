@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    {!! SEOMeta::generate() !!}
     
     <!-- TinyMCE -->
     <script src="https://cdn.tiny.cloud/1/{{config('app.tinymce_apikey', 'noapikey')}}/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>

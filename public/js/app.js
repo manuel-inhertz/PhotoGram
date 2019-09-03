@@ -1853,7 +1853,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ['postId', 'authUsername'],
+  props: ['postId'],
   mounted: function mounted() {
     console.log('CommentsGrid component mounted.');
   },
@@ -1863,8 +1863,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       comment: '',
-      comments: [],
-      submitted: 1
+      comments: []
     };
   },
   methods: {
@@ -1890,7 +1889,7 @@ __webpack_require__.r(__webpack_exports__);
             comment: comment.comment,
             userId: comment.user_id,
             postId: comment.post_id,
-            username: _this2.authUsername
+            username: comment.username
           };
         });
         console.log(_this2.comments);

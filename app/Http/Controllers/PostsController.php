@@ -3,12 +3,16 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Comment;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 class PostsController extends Controller
 {
+
+    use SEOTools;
+
     public function __construct()
     {
         // Require the user to be logged in
@@ -17,6 +21,11 @@ class PostsController extends Controller
 
     public function index()
     {
+        // The SEO Stuff
+        $this->seo()->setTitle('Feeds');
+        $this->seo()->setDescription('The main profile feed where you can find posts from the people you follow');
+        
+        
         // Get all the following users
         $users = auth()->user()->following()->pluck('profiles.user_id');
 
@@ -35,6 +44,10 @@ class PostsController extends Controller
     
     public function create()
     {
+        // The SEO Stuff
+        $this->seo()->setTitle('New post');
+        $this->seo()->setDescription('This page shows a form to add a new post');
+
         // Returning the form view
         return view('posts.create');
     }
@@ -58,6 +71,9 @@ class PostsController extends Controller
     }
     public function show(Post $post)
     {
+        // The SEO Stuff
+        $this->seo()->setTitle('Post '. $post->id );
+        
         // Get auth user
         $user = auth()->user();
 
@@ -94,6 +110,7 @@ class PostsController extends Controller
         $input = $request->all();
         $input['user_id'] = auth()->user()->id;
         $input['post_id'] = $post->id;
+        $input['username'] = auth()->user()->username;
 
         return Comment::create($input);
     }

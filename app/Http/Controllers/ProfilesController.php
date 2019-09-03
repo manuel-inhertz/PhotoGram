@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Artesaos\SEOTools\Traits\SEOTools;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Intervention\Image\Facades\Image;
@@ -10,12 +11,19 @@ use Intervention\Image\Facades\Image;
 class ProfilesController extends Controller
 {
 
+	use SEOTools;
+
 	private function getUserByUsername($username) {
 		return  User::where('username', $username)->firstOrFail();
 	}
 
     public function index($username) 
     {
+		
+		// The SEO Stuff
+		$this->seo()->setTitle( $username );
+		$this->seo()->setDescription('The profile page with all the posts from a user');
+		
 		// Get the user by its username
 		$user = $this->getUserByUsername($username);
 		
@@ -37,7 +45,12 @@ class ProfilesController extends Controller
 
     public function edit($username)
     {
-    	// Get the user by its username
+		
+		// The SEO Stuff
+		$this->seo()->setTitle( 'Edit user ' . $username );
+		$this->seo()->setDescription('This page shows a form to edit the user details');
+		
+		// Get the user by its username
 		$user = $this->getUserByUsername($username);
 			
     	//Authorize user to only edit own profile

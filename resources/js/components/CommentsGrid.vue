@@ -14,7 +14,7 @@
 
 <script>
     export default {
-        props: ['postId', 'authUsername'],
+        props: ['postId'],
         mounted() {
             console.log('CommentsGrid component mounted.')
         },
@@ -24,8 +24,7 @@
         data: function() {
             return {
                 comment: '',
-                comments: [],
-                submitted: 1
+                comments: []
             }
         },
         methods: {
@@ -46,7 +45,7 @@
                                comment: comment.comment,
                                userId: comment.user_id,
                                postId: comment.post_id,
-                               username: this.authUsername
+                               username: comment.username
                            }
                         });
                         console.log(this.comments);
