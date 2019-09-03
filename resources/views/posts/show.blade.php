@@ -20,6 +20,8 @@
            <div class="body mt-3">
                 {!! $post->caption !!}
            </div>
+           <hr>
+        <comments-grid post-id={{$post->id}} auth-username="{{auth()->user()->username}}"></comments-grid>
        </div>
    </div>
 </div>

@@ -21,6 +21,7 @@ window.Vue = require('vue');
 
 Vue.component('follow-button', require('./components/FollowButton.vue').default);
 Vue.component('like-button', require('./components/LikeButton.vue').default);
+Vue.component('comments-grid', require('./components/CommentsGrid.vue').default);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

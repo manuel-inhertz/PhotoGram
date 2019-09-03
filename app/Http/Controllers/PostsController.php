@@ -2,8 +2,10 @@
 namespace App\Http\Controllers;
 
 use App\Post;
-use App\User;
+use App\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
 use Intervention\Image\Facades\Image;
 class PostsController extends Controller
 {
@@ -52,7 +54,7 @@ class PostsController extends Controller
             'image' => $imagePath,
         ]);
         // Redirect to the profile of the post
-        return redirect('/profile/' . auth()->user()->id);
+        return redirect('/profile/' . auth()->user()->username);
     }
     public function show(Post $post)
     {
@@ -66,10 +68,12 @@ class PostsController extends Controller
         $likesCount = $post->likers()->count();
 
         // Check if a user is following the profile of a post
-		$follows = (auth()->user()) ? auth()->user()->following->contains($post->user->id) : false;
+        $follows = (auth()->user()) ? auth()->user()->following->contains($post->user->id) : false;
+        
         return view('posts.show', compact('post', 'follows', 'isLiked', 'likesCount'));
     }
 
+    // Handles like on the post from the auth user
     public function like(Post $post)
     {
         // Get auth user
@@ -77,5 +81,30 @@ class PostsController extends Controller
         // Toggle like to post from auth user
         return $user->toggleLike($post); 
 
+    }
+
+    // Handles comment on the post from the auth user
+    public function comment(Post $post, Request $request)
+    {
+        
+        $request->validate([
+            'comment'=>'required',
+        ]);
+
+        $input = $request->all();
+        $input['user_id'] = auth()->user()->id;
+        $input['post_id'] = $post->id;
+
+        return Comment::create($input);
+    }
+
+    // Get all comments
+    public function getComments(Post $post)
+    {
+        // Retrieve all comments
+        $comments = $post->comments;
+        
+        // Return results as json
+        return response()->json($comments);
     }
 }

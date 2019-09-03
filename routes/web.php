@@ -39,3 +39,8 @@ Route::post('follow/{user}', 'FollowsController@store');
 
 // Like Routes
 Route::post('like/{post}', 'PostsController@like');
+
+// Comments Routes
+Route::post('comment/{post}', 'PostsController@comment');
+
+Route::get('comments/{post}', 'PostsController@getComments');
